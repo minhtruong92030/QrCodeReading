@@ -15,11 +15,9 @@ class MAIN(QMainWindow):
     
     def update_coca(self, value):
         self.RegValueCoca.setText(str(value))
-        # print("a = " + str(value))
 
     def update_pepsi(self,value):
         self.RegValuePepsi.setText(str(value))
-        # print("b = " + str(value))
 
 if __name__ == "__main__":
     app = QApplication([])

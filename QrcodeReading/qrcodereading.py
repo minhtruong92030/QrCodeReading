@@ -29,7 +29,6 @@ while True:
     img_resp= urllib.request.urlopen(url+'/cam-hi.jpg')
     imgnp=np.array(bytearray(img_resp.read()),dtype=np.uint8)
     frame=cv2.imdecode(imgnp,-1)
-    #_, frame = cap.read()
  
     #giai ma QRcode tu khung hinh
     decodedObjects = pyzbar.decode(frame)
@@ -53,8 +52,8 @@ while True:
         product = {
             'name': decoded_data
         }      
-        # if decoded_data == 'COCA' or decoded_data == 'PEPSI':
-            # POST(product)
+        if decoded_data == 'COCA' or decoded_data == 'PEPSI':
+            POST(product)
         if decoded_data == 'COCA':
             a = a + 1
             print("a = " + str(a))
