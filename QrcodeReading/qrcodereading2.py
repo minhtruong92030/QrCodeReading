@@ -3,9 +3,10 @@ import numpy as np
 import pyzbar.pyzbar as pyzbar
 import urllib.request
 from PyQt5.QtCore import pyqtSignal, QObject
-import time
 
-# URL của Camera IP
+#this is a script for QR code detected
+
+# Camera IP's url
 url = 'http://192.168.124.57/cam-hi.jpg'
 font = cv2.FONT_HERSHEY_PLAIN
 
@@ -29,8 +30,6 @@ class QRCodeReaderApp(QObject):
         imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
         frame = cv2.imdecode(imgnp, -1)
         decodedObjects = pyzbar.decode(frame)
-        # print("decodedObjects is non-empty:", bool(decodedObjects))
-        # print(decodedObjects)
 
         # If there's no QRcode detected
         if not decodedObjects:
