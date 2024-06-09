@@ -7,6 +7,7 @@ from qrcodepost import POST
 
 #this is a script for QR code detected
 #vui vui vui
+#vui vui vui uviuiv
 # Camera IP's url
 url = 'http://192.168.124.57/cam-hi.jpg'
 font = cv2.FONT_HERSHEY_PLAIN
