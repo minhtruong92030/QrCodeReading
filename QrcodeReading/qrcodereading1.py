@@ -46,7 +46,6 @@ class QRCodeReaderApp(QObject):
             #if self.prev != self.pres:
             #self.prev = self.pres   #gan gia tri hien tai cho gia tri cu (hoac ban dau)
             #print(self.prev)
-            # test for fun 
             if(self.c == 0):
                 if self.pres.decode() == 'COCA':
                     self.a += 1
