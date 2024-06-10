@@ -3,7 +3,7 @@ import numpy as np
 import pyzbar.pyzbar as pyzbar
 import urllib.request
 from PyQt5.QtCore import pyqtSignal, QObject
-from qrcodepost import POST
+from qrcodepost import POST 
 
 #this is a script for QR code detected
 #vui vui vui
@@ -46,22 +46,23 @@ class QRCodeReaderApp(QObject):
         # Store regconized QRcode data
         for obj in decodedObjects:
             self.pres = obj.data
+            self.decoded_data = self.pres.decode()
             if(self.c == 0):
-                if self.pres.decode() == 'COCA':
+                if self.decoded_data == 'COCA':
                     self.a += 1
                     self.a_changed.emit(self.a)
                     product ={
-                        'name': 'COCA'
-                    }
-                    POST(product)
+                        'name' : 'COCA'
+                    }          
+                    POST(product)        
                     self.c = 1
 
                     
-                if self.pres.decode() == 'PEPSI':
+                if self.decoded_data == 'PEPSI':
                     self.b += 1
                     self.b_changed.emit(self.b)
                     product ={
-                        'name': 'PEPSI'
+                        'name' : 'PEPSI'
                     }
                     POST(product)
                     self.c = 1
