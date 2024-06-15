@@ -6,8 +6,6 @@ from PyQt5.QtCore import pyqtSignal, QObject
 from qrcodepost import POST 
 
 #this is a script for QR code detected
-#vui vui vui
-#vui vui vui uviuiv
 # Camera IP's url
 url = 'http://192.168.124.57/cam-hi.jpg'
 font = cv2.FONT_HERSHEY_PLAIN
@@ -15,6 +13,8 @@ font = cv2.FONT_HERSHEY_PLAIN
 class QRCodeReaderApp(QObject):
     a_changed = pyqtSignal(int)
     b_changed = pyqtSignal(int)
+    c_changed = pyqtSignal(int)
+    s_changed = pyqtSignal(int)
 
     def __init__(self):
         super().__init__()  
@@ -23,8 +23,10 @@ class QRCodeReaderApp(QObject):
         self.obj = ""
         self.a = 0
         self.b = 0
-        self.running = True
         self.c = 0
+        self.s = 0
+        self.running = True
+        self.d = 0
         self.n = 0
 
     def update_frame(self):
@@ -32,14 +34,14 @@ class QRCodeReaderApp(QObject):
         imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
         frame = cv2.imdecode(imgnp, -1)
         decodedObjects = pyzbar.decode(frame)
-
+        print(decodedObjects)
         # If there's no QRcode detected
         if not decodedObjects:
             self.n =  self.n + 1
             #take 10 frames
             if( self.n >= 10):
-                self.c = 0
-            print(str(self.n))
+                self.d = 0
+            # print(str(self.n))
         else:
             self.n = 0
         
@@ -47,25 +49,38 @@ class QRCodeReaderApp(QObject):
         for obj in decodedObjects:
             self.pres = obj.data
             self.decoded_data = self.pres.decode()
-            if(self.c == 0):
+            if(self.d == 0):
                 if self.decoded_data == 'COCA':
                     self.a += 1
                     self.a_changed.emit(self.a)
                     product ={
-                        'name' : 'COCA'
+                        'name' : self.decoded_data
                     }          
                     POST(product)        
-                    self.c = 1
+                    self.d = 1
 
                     
                 if self.decoded_data == 'PEPSI':
                     self.b += 1
                     self.b_changed.emit(self.b)
                     product ={
-                        'name' : 'PEPSI'
+                        'name' : self.decoded_data
                     }
                     POST(product)
-                    self.c = 1
+                    self.d = 1
+
+                if self.decoded_data == 'FANTA':
+                    self.c += 1
+                    self.c_changed.emit(self.c)
+                    product ={
+                        'name' : self.decoded_data
+                    }          
+                    POST(product)        
+                    self.d = 1
+            
+            self.s = self.a + self.b + self.c
+            self.s_changed.emit(self.s)
+                
 
             cv2.putText(frame, obj.data.decode(), (70, 70), font, 2, (255, 0, 0), 3)
             

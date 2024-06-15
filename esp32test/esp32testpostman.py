@@ -1,9 +1,9 @@
 import requests
 
-url = 'http://192.168.1.244/test'
+url = 'http://192.168.124.99/product'
 
 data ={
-    'name':'TRUONG'
+    'name':'COCA'
 }
 
 response = requests.post(url,data)
