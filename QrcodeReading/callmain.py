@@ -1,6 +1,11 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5 import uic 
 from qrcodereading1 import QRCodeReaderApp
+from PyQt5 import uic
+from PyQt5 import QtGui
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtCore import QThread, pyqtSignal
+import cv2
+import numpy as np
 from qrcodepost import POST_sysrun
 import sys
 
@@ -16,9 +21,30 @@ class MAIN(QMainWindow):
         self.qrcode.s_changed.connect(self.update_sum)
         self.StartButton.clicked.connect(self.send_start)
         self.StopButton.clicked.connect(self.send_stop)
+        # self.start_capture_video
+        self.thread = {}
         self.show()
         self.qrcode.run()
     
+    #this is for camera display on gui
+    # def start_capture_video(self):
+    #     self.thread[1] = capture_video(index = 1)
+    #     # self.thread[1].start()
+    #     self.thread[1].signal.connect(self.show_camera)
+
+    # def show_camera(self, cv_img):
+    #     qt_img = self.convert_cv_qt(cv_img)
+    #     self.CameraDisplay.setPixmap(qt_img)
+    
+    # def convert_cv_qt(self, cv_img):
+    #     rgb_image = cv2.cvColor(cv_img,cv2.COLOR_BGR2RGB)
+    #     h, w, ch = rgb_image.shape
+    #     bytes_per_line = ch*w
+    #     convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
+    #     p = convert_to_Qt_format.scaled(800, 600, Qt.KeepAspectRatio)
+    #     return QPixmap.fromImage(p)
+ 
+    #this is for updating quantities counted
     def update_coca(self, value):
         self.RegValueCoca.setText(str(value))
 
@@ -43,7 +69,23 @@ class MAIN(QMainWindow):
         }
         POST_sysrun(stop)
         
+# class capture_video(QThread):
+#     signal = pyqtSignal(np.ndarray)
+#     def __init__(self,index):
+#         self.index = index
+#         self.qrcode = QRCodeReaderApp()
+#         print('start threading',self.index)
+#         super(capture_video,self).__init__()
 
+#     def run(self):
+#         cap = cv2.VideoCapture(self.qrcode.frame)
+#         while True:
+#             ret, cv_img = cap.read()
+#             if ret:
+#                 self.signal.emit(cv_img)
+#     def stop(self):
+#         print('stop threading', self.index)
+#         self.terminate()
 
 if __name__ == "__main__":
     app = QApplication([])

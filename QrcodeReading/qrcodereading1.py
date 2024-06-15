@@ -5,8 +5,6 @@ import urllib.request
 from PyQt5.QtCore import pyqtSignal, QObject
 from qrcodepost import POST
 
-#post 3
-
 #this is a script for QR code detected
 # Camera IP's url
 url = 'http://192.168.124.57/cam-hi.jpg'
