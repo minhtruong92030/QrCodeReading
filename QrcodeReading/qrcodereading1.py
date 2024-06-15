@@ -3,7 +3,9 @@ import numpy as np
 import pyzbar.pyzbar as pyzbar
 import urllib.request
 from PyQt5.QtCore import pyqtSignal, QObject
-from qrcodepost import POST 
+from qrcodepost import POST
+
+#post 3
 
 #this is a script for QR code detected
 # Camera IP's url
