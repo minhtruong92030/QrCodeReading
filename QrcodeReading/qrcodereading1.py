@@ -15,6 +15,7 @@ class QRCodeReaderApp(QObject):
     b_changed = pyqtSignal(int)
     c_changed = pyqtSignal(int)
     s_changed = pyqtSignal(int)
+    data_changed = pyqtSignal(str)
 
     def __init__(self):
         super().__init__()  
@@ -26,6 +27,7 @@ class QRCodeReaderApp(QObject):
         self.c = 0
         self.s = 0
         self.running = True
+        self.camerarunning = True
         self.d = 0
         self.n = 0
 
@@ -34,7 +36,6 @@ class QRCodeReaderApp(QObject):
         imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
         frame = cv2.imdecode(imgnp, -1)
         decodedObjects = pyzbar.decode(frame)
-        print(decodedObjects)
         # If there's no QRcode detected
         if not decodedObjects:
             self.n =  self.n + 1
@@ -49,6 +50,7 @@ class QRCodeReaderApp(QObject):
         for obj in decodedObjects:
             self.pres = obj.data
             self.decoded_data = self.pres.decode()
+            self.data_changed.emit(self.decoded_data)
             if(self.d == 0):
                 if self.decoded_data == 'COCA':
                     self.a += 1
@@ -89,12 +91,31 @@ class QRCodeReaderApp(QObject):
         if key == 27:
             return False
         return True
-
+    
     def run(self):
         while self.running:
             if not self.update_frame():
                 self.running = False
+            
         cv2.destroyAllWindows()
+    
+    def update_cameraframe(self):
+        img_resp = urllib.request.urlopen(url)
+        imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
+        cameraframe = cv2.imdecode(imgnp, -1)
+        decodedObjects = pyzbar.decode(cameraframe)
+        for obj in decodedObjects:
+            cv2.putText(cameraframe, obj.data.decode(), (70, 70), font, 2, (255, 0, 0), 3)
+        return cameraframe
+    
+    def camerarun(self):
+        while self.camerarunning:
+            cameraframe = self.update_cameraframe()
+            if cameraframe is None:
+                self.camerarunning = False
+                break
+        cv2.destroyAllWindows()
+    
 
 if __name__ == "__main__":
     app = QRCodeReaderApp()
