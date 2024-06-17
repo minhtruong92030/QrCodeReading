@@ -10,10 +10,13 @@ from qrcodepost import POST_sysrun
 import sys
 
 class MAIN(QMainWindow):
+
     def __init__(self):  
         super().__init__()
         uic.loadUi("qrcodeapp1.ui",self)
         self.qrcode0 = QRCodeReaderApp()
+        self.count_running = True
+        self.count_stopping = False
         #with this function, you should check callmain and qrcodereading1
         self.qrcode0.a_changed.connect(self.update_coca)
         self.qrcode0.b_changed.connect(self.update_pepsi)
@@ -42,7 +45,7 @@ class MAIN(QMainWindow):
     def start_capture_video(self):
         self.thread[1] = capture_video(index = 1)
         self.thread[1].start()
-        self.thread[1].signal.connect(self.show_camera)
+        self.thread[1].signal.connect(self.show_camera) #camera data runs in this thread by signal
 
     def show_camera(self, cv_img):
         """Cập nhật label với hình ảnh từ opencv"""

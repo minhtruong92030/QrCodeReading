@@ -18,7 +18,7 @@ class QRCodeReaderApp(QObject):
     data_changed = pyqtSignal(str)
 
     def __init__(self):
-        super().__init__()  
+        super().__init__()
         self.prev = ""
         self.pres = ""
         self.obj = ""
@@ -27,7 +27,6 @@ class QRCodeReaderApp(QObject):
         self.c = 0
         self.s = 0
         self.running = True
-        self.camerarunning = True
         self.d = 0
         self.n = 0
 
@@ -47,6 +46,7 @@ class QRCodeReaderApp(QObject):
             self.n = 0
         
         # Store regconized QRcode data
+
         for obj in decodedObjects:
             self.pres = obj.data
             self.decoded_data = self.pres.decode()
@@ -81,17 +81,16 @@ class QRCodeReaderApp(QObject):
                     self.d = 1
             
             self.s = self.a + self.b + self.c
-            self.s_changed.emit(self.s)
-                
+            self.s_changed.emit(self.s)  
 
-            cv2.putText(frame, obj.data.decode(), (70, 70), font, 2, (255, 0, 0), 3)
-            
-        cv2.imshow("live transmission", frame)
+            cv2.putText(frame, obj.data.decode(), (70, 70), font, 2, (255, 0, 0), 3)  
+        # cv2.imshow("live transmission", frame)
         key = cv2.waitKey(1)
         if key == 27:
             return False
-        return True
-    
+        else:
+            return True
+        
     def run(self):
         while self.running:
             if not self.update_frame():
@@ -108,15 +107,6 @@ class QRCodeReaderApp(QObject):
             cv2.putText(cameraframe, obj.data.decode(), (70, 70), font, 2, (255, 0, 0), 3)
         return cameraframe
     
-    def camerarun(self):
-        while self.camerarunning:
-            cameraframe = self.update_cameraframe()
-            if cameraframe is None:
-                self.camerarunning = False
-                break
-        cv2.destroyAllWindows()
-    
-
 if __name__ == "__main__":
     app = QRCodeReaderApp()
     app.run()
