@@ -10,6 +10,7 @@ from qrcodepost import POST
 url = 'http://192.168.124.57/cam-hi.jpg'
 font = cv2.FONT_HERSHEY_PLAIN
 
+#hi
 class QRCodeReaderApp(QObject):
     a_changed = pyqtSignal(int)
     b_changed = pyqtSignal(int)
