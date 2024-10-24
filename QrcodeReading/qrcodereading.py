@@ -6,10 +6,10 @@ import requests
 
 #cap = cv2.VideoCapture(0)
 
-def POST(product): 
-    API = 'http://192.168.124.57/test'
-    response = requests.post(API, product)
-    print('response: ', response)
+# def POST(product): 
+#     API = 'http://192.168.124.57/test'
+#     response = requests.post(API, product)
+#     print('response: ', response)
 
 font = cv2.FONT_HERSHEY_PLAIN
 
