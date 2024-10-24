@@ -50,28 +50,29 @@ while True:
         cv2.putText(frame, obj.data.decode(), (70, 70), font, 2,
                     (255, 0, 0), 3)
         
-        # product = {
-        #     'name': decoded_data
-        # }      
-        # if decoded_data == 'COCA' or decoded_data == 'PEPSI':
-        #     POST(product)
-        # if decoded_data == 'COCA':
-        #     a = a + 1
-        #     print("a = " + str(a))
-        # if decoded_data == 'PEPSI':
-        #     b = b + 1
-        #     print("b = " + str(b))
-
+        product = {
+            'name': decoded_data
+        }      
+        if decoded_data == 'COCA' or decoded_data == 'PEPSI':
+            POST(product)
         if decoded_data == 'COCA':
-            product1 = {
-                'name': 0;
-            }
-            POST(product1)
+            a = a + 1
+            print("a = " + str(a))
         if decoded_data == 'PEPSI':
-            product2 = {
-                'name': 1;
-            }
-            POST(product2)
+            b = b + 1
+            print("b = " + str(b))
+
+        # if decoded_data == 'COCA':
+        #     product1 = {
+        #         'name': 0;
+        #     }
+        #     POST(product1)
+
+        # if decoded_data == 'PEPSI':
+        #     product2 = {
+        #         'name': 1;
+        #     }
+        #     POST(product2)
 
     #Hien thi khung hinh voi du lieu QRcode
     cv2.imshow("live transmission", frame)
