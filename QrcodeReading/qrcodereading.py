@@ -5,7 +5,7 @@ import urllib.request
 import requests
 
 #cap = cv2.VideoCapture(0)
-
+#hello night
 # def POST(product): 
 #     API = 'http://192.168.124.57/test'
 #     response = requests.post(API, product)
