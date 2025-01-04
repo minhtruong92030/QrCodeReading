@@ -3,11 +3,12 @@ import numpy as np
 import pyzbar.pyzbar as pyzbar
 import urllib.request
 from PyQt5.QtCore import pyqtSignal, QObject
-from qrcodepost import POST
+from qrcodepost import POST1
+# from qrcodepost import POST2
 
 #this is a script for QR code detected
 # Camera IP's url
-url = 'http://192.168.218.57/cam-hi.jpg'
+url = 'http://192.168.224.57/cam-hi.jpg'
 font = cv2.FONT_HERSHEY_PLAIN
 
 #hi
@@ -59,7 +60,7 @@ class QRCodeReaderApp(QObject):
                     product ={
                         'name' : self.decoded_data
                     }          
-                    POST(product)        
+                    POST1(product)        
                     self.d = 1
 
                     
@@ -69,7 +70,7 @@ class QRCodeReaderApp(QObject):
                     product ={
                         'name' : self.decoded_data
                     }
-                    POST(product)
+                    POST1(product)
                     self.d = 1
 
                 if self.decoded_data == 'FANTA':
@@ -78,7 +79,7 @@ class QRCodeReaderApp(QObject):
                     product ={
                         'name' : self.decoded_data
                     }          
-                    POST(product)        
+                    POST1(product)        
                     self.d = 1
             
             self.s = self.a + self.b + self.c

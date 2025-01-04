@@ -3,7 +3,7 @@ import numpy as np
 import pyzbar.pyzbar as pyzbar
 import urllib.request
 import requests
-from qrcodepost import POST
+# from qrcodepost import POST
 
 #cap = cv2.VideoCapture(0)
 #hello night
@@ -15,7 +15,7 @@ from qrcodepost import POST
 font = cv2.FONT_HERSHEY_PLAIN
 
 #URL cua Camera IP 
-url='http://192.168.218.57'
+url='http://192.168.224.57'
 
 # Tao cua so de hien thi video truc tiep
 cv2.namedWindow("live transmission", cv2.WINDOW_AUTOSIZE)
@@ -50,9 +50,9 @@ while True:
         cv2.putText(frame, obj.data.decode(), (70, 70), font, 2,
                     (255, 0, 0), 3)
         
-        # product = {
-        #     'name': decoded_data
-        # }      
+        product = {
+            'name': decoded_data
+        }      
         # if decoded_data == 'COCA' or decoded_data == 'PEPSI':
         #     POST(product)
         # if decoded_data == 'COCA':
@@ -62,17 +62,11 @@ while True:
         #     b = b + 1
         #     print("b = " + str(b))
 
-        if decoded_data == 'COCA':
-            product1 = {
-                'name': 0;
-            }
-            POST(product1)
+        # if decoded_data == 'COCA':
+        #     POST(product)
 
         # if decoded_data == 'PEPSI':
-        #     product2 = {
-        #         'name': 1;
-        #     }
-        #     POST(product2)
+        #     POST(product)
 
     #Hien thi khung hinh voi du lieu QRcode
     cv2.imshow("live transmission", frame)
